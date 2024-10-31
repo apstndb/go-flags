@@ -83,89 +83,89 @@ and Unmarshaler interfaces.
 
 The following is a list of tags for struct fields supported by go-flags:
 
-		short:            the short name of the option (single character)
-		long:             the long name of the option
-		required:         if non empty, makes the option required to appear on the command
-		                  line. If a required option is not present, the parser will
-		                  return ErrRequired (optional)
-		description:      the description of the option (optional)
-		long-description: the long description of the option. Currently only
-		                  displayed in generated man pages (optional)
-		no-flag:          if non-empty, this field is ignored as an option (optional)
+	short:            the short name of the option (single character)
+	long:             the long name of the option
+	required:         if non empty, makes the option required to appear on the command
+	                  line. If a required option is not present, the parser will
+	                  return ErrRequired (optional)
+	description:      the description of the option (optional)
+	long-description: the long description of the option. Currently only
+	                  displayed in generated man pages (optional)
+	no-flag:          if non-empty, this field is ignored as an option (optional)
 
-		optional:       if non-empty, makes the argument of the option optional. When an
-		                argument is optional it can only be specified using
-		                --option=argument (optional)
-		optional-value: the value of an optional option when the option occurs
-		                without an argument. This tag can be specified multiple
-		                times in the case of maps or slices (optional)
-		default:        the default value of an option. This tag can be specified
-		                multiple times in the case of slices or maps (optional)
-		default-mask:   when specified, this value will be displayed in the help
-		                instead of the actual default value. This is useful
-		                mostly for hiding otherwise sensitive information from
-		                showing up in the help. If default-mask takes the special
-		                value "-", then no default value will be shown at all
-		                (optional)
-		env:            the default value of the option is overridden from the
-		                specified environment variable, if one has been defined.
-		                (optional)
-		env-delim:      the 'env' default value from environment is split into
-		                multiple values with the given delimiter string, use with
-		                slices and maps (optional)
-		value-name:     the name of the argument value (to be shown in the help)
-		                (optional)
-		choice:         limits the values for an option to a set of values.
-		                Repeat this tag once for each allowable value.
-		                e.g. `long:"animal" choice:"cat" choice:"dog"`
-		hidden:         if non-empty, the option is not visible in the help or man page.
+	optional:       if non-empty, makes the argument of the option optional. When an
+	                argument is optional it can only be specified using
+	                --option=argument (optional)
+	optional-value: the value of an optional option when the option occurs
+	                without an argument. This tag can be specified multiple
+	                times in the case of maps or slices (optional)
+	default:        the default value of an option. This tag can be specified
+	                multiple times in the case of slices or maps (optional)
+	default-mask:   when specified, this value will be displayed in the help
+	                instead of the actual default value. This is useful
+	                mostly for hiding otherwise sensitive information from
+	                showing up in the help. If default-mask takes the special
+	                value "-", then no default value will be shown at all
+	                (optional)
+	env:            the default value of the option is overridden from the
+	                specified environment variable, if one has been defined.
+	                (optional)
+	env-delim:      the 'env' default value from environment is split into
+	                multiple values with the given delimiter string, use with
+	                slices and maps (optional)
+	value-name:     the name of the argument value (to be shown in the help)
+	                (optional)
+	choice:         limits the values for an option to a set of values.
+	                Repeat this tag once for each allowable value.
+	                e.g. `long:"animal" choice:"cat" choice:"dog"`
+	hidden:         if non-empty, the option is not visible in the help or man page.
 
-		key-value-delimiter:  when specified on a map field, the key and the value are
-		                      separated with the given delimiter string,
-	                          instead of the default delimiter ":" (optional)
+	key-value-delimiter:  when specified on a map field, the key and the value are
+	                      separated with the given delimiter string,
+	                      instead of the default delimiter ":" (optional)
 
-		base: a base (radix) used to convert strings to integer values, the
-		      default base is 10 (i.e. decimal) (optional)
+	base: a base (radix) used to convert strings to integer values, the
+	      default base is 10 (i.e. decimal) (optional)
 
-		ini-name:       the explicit ini option name (optional)
-		no-ini:         if non-empty this field is ignored as an ini option
-		                (optional)
+	ini-name:       the explicit ini option name (optional)
+	no-ini:         if non-empty this field is ignored as an ini option
+	                (optional)
 
-		group:                when specified on a struct field, makes the struct
-		                      field a separate group with the given name (optional)
-		namespace:            when specified on a group struct field, the namespace
-		                      gets prepended to every option's long name and
-		                      subgroup's namespace of this group, separated by
-		                      the parser's namespace delimiter (optional)
-		env-namespace:        when specified on a group struct field, the env-namespace
-		                      gets prepended to every option's env key and
-		                      subgroup's env-namespace of this group, separated by
-		                      the parser's env-namespace delimiter (optional)
-		command:              when specified on a struct field, makes the struct
-		                      field a (sub)command with the given name (optional)
-		subcommands-optional: when specified on a command struct field, makes
-		                      any subcommands of that command optional (optional)
-		alias:                when specified on a command struct field, adds the
-		                      specified name as an alias for the command. Can be
-		                      be specified multiple times to add more than one
-		                      alias (optional)
-		positional-args:      when specified on a field with a struct type,
-		                      uses the fields of that struct to parse remaining
-		                      positional command line arguments into (in order
-		                      of the fields). If a field has a slice type,
-		                      then all remaining arguments will be added to it.
-		                      Positional arguments are optional by default,
-		                      unless the "required" tag is specified together
-		                      with the "positional-args" tag. The "required" tag
-		                      can also be set on the individual rest argument
-		                      fields, to require only the first N positional
-		                      arguments. If the "required" tag is set on the
-		                      rest arguments slice, then its value determines
-		                      the minimum amount of rest arguments that needs to
-		                      be provided (e.g. `required:"2"`) (optional)
-		positional-arg-name:  used on a field in a positional argument struct; name
-		                      of the positional argument placeholder to be shown in
-		                      the help (optional)
+	group:                when specified on a struct field, makes the struct
+	                      field a separate group with the given name (optional)
+	namespace:            when specified on a group struct field, the namespace
+	                      gets prepended to every option's long name and
+	                      subgroup's namespace of this group, separated by
+	                      the parser's namespace delimiter (optional)
+	env-namespace:        when specified on a group struct field, the env-namespace
+	                      gets prepended to every option's env key and
+	                      subgroup's env-namespace of this group, separated by
+	                      the parser's env-namespace delimiter (optional)
+	command:              when specified on a struct field, makes the struct
+	                      field a (sub)command with the given name (optional)
+	subcommands-optional: when specified on a command struct field, makes
+	                      any subcommands of that command optional (optional)
+	alias:                when specified on a command struct field, adds the
+	                      specified name as an alias for the command. Can be
+	                      be specified multiple times to add more than one
+	                      alias (optional)
+	positional-args:      when specified on a field with a struct type,
+	                      uses the fields of that struct to parse remaining
+	                      positional command line arguments into (in order
+	                      of the fields). If a field has a slice type,
+	                      then all remaining arguments will be added to it.
+	                      Positional arguments are optional by default,
+	                      unless the "required" tag is specified together
+	                      with the "positional-args" tag. The "required" tag
+	                      can also be set on the individual rest argument
+	                      fields, to require only the first N positional
+	                      arguments. If the "required" tag is set on the
+	                      rest arguments slice, then its value determines
+	                      the minimum amount of rest arguments that needs to
+	                      be provided (e.g. `required:"2"`) (optional)
+	positional-arg-name:  used on a field in a positional argument struct; name
+	                      of the positional argument placeholder to be shown in
+	                      the help (optional)
 
 Either the `short:` tag or the `long:` must be specified to make the field eligible as an
 option.
